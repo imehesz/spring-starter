@@ -83,8 +83,109 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+              <groupId>com.github.eirslett</groupId>
+              <artifactId>frontend-maven-plugin</artifactId>
+              <!-- Use the latest released version:
+              https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
+              <version>0.0.26</version>
+
+              <executions>
+                <execution>
+                    <id>install node and npm</id>
+                    <goals>
+                        <goal>install-node-and-npm</goal>
+                    </goals>
+                    <configuration>
+                        <nodeVersion>v4.1.2</nodeVersion>
+                        <npmVersion>3.3.7</npmVersion>
+                    </configuration>
+                </execution>
+
+                <execution>
+                  <id>npm install</id>
+                  <goals>
+                      <goal>npm</goal>
+                  </goals>
+                  <!-- Optional configuration which provides for running any npm command -->
+                  <configuration>
+                      <arguments>install</arguments>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+      <profile>
+        <id>dev</id>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>com.github.eirslett</groupId>
+              <artifactId>frontend-maven-plugin</artifactId>
+              <!-- Use the latest released version:
+              https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
+              <version>0.0.26</version>
+
+              <executions>
+                <execution>
+                  <id>gulp build</id>
+                    <goals>
+                      <goal>gulp</goal>
+                    </goals>
+                    <configuration>
+                      <arguments>--no-color</arguments>
+                    </configuration>
+                </execution>
+
+              </executions>
+            </plugin>
+          </plugins>
+        </build>
+        <activation>
+          <activeByDefault>true</activeByDefault>
+          <property>
+            <name>dev</name>
+          </property>
+        </activation>
+      </profile>
+      <profile>
+        <id>prod</id>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>com.github.eirslett</groupId>
+              <artifactId>frontend-maven-plugin</artifactId>
+              <!-- Use the latest released version:
+              https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
+              <version>0.0.26</version>
+
+              <executions>
+                <execution>
+                  <id>gulp build</id>
+                    <goals>
+                      <goal>gulp</goal>
+                    </goals>
+                    <configuration>
+                      <arguments>deploy --no-color</arguments>
+                    </configuration>
+                </execution>
+
+              </executions>
+            </plugin>
+          </plugins>
+        </build>
+
+        <activation>
+          <property>
+            <name>prod</name>
+          </property>
+        </activation>
+      </profile>
+    </profiles>
+
 
 </project>
 

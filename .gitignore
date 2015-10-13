@@ -6,3 +6,5 @@
 *.1
 config/
 users/
+node/*
+node_modules/*
